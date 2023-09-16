@@ -44,12 +44,34 @@ public class PPBO_02_L0122142 {
     System.out.println("\nStatistik Anggoro Market\n");
 
     System.out.printf("Total transaksi  : %d\n", SuperMarket.totalTransaction);
-    System.out.printf("Total pendapatan : Rp %s\n", Utils.currencyFormat(superMarket.getTotalBalance()));
+    System.out.printf("Total pendapatan : Rp %s\n\n", Utils.currencyFormat(superMarket.getTotalBalance()));
+
+    int availableProductCount = superMarket.getProducts()
+        .stream().map(Product::getAmount)
+        .reduce(0, Integer::sum);
+    int soldProductCount = superMarket.getTransactionHistories()
+        .stream().map(Transaction::getAmount)
+        .reduce(0, Integer::sum);
+    int totalProductCount = availableProductCount + soldProductCount;
+
+    System.out.printf("Jumlah produk            : %d\n", totalProductCount);
+    System.out.printf("Jumlah produk tersedia   : %d\n", availableProductCount);
+    System.out.printf("Jumlah produk terjual    : %d\n", soldProductCount);
+
+    System.out.println("\nProgres penjualan produk :");
+    double progress = ((double) soldProductCount / (double) totalProductCount) * 58;
+    System.out.print("[");
+    for (int a = 0; a < (int) progress; a++)
+      System.out.print("#");
+    for (int a = 0; a < 58 - (int) progress; a++)
+      System.out.print(".");
+    System.out.println("]");
+    System.out.printf(" %.1f%%\n", (progress / 58) * 100);
 
     System.out.println("\nRiwayat transaksi:\n");
 
     if (superMarket.getTransactionHistories().isEmpty()) {
-      System.out.println("Tidak ada data transaksi!");
+      System.out.println("Tidak ada data riwayat transaksi!");
       Utils.enterToContinue(scanner);
       return;
     }
@@ -59,6 +81,7 @@ public class PPBO_02_L0122142 {
         "%-3s | %-24s | %-8s | %-16s\n",
         "No", "Nama Produk", "Jumlah", "Harga + PPN"
     );
+    Utils.printLine("-", 60);
 
     int num = 1;
     for (Transaction transaction : superMarket.getTransactionHistories()) {
@@ -246,6 +269,7 @@ public class PPBO_02_L0122142 {
         "%-3s | %-24s | %-8s | %-16s\n",
         "No", "Nama", "Jumlah", "Harga"
     );
+    Utils.printLine("-", 60);
 
     int index = 1;
     for (Product product : products) {
