@@ -53,9 +53,12 @@ public class SuperMarket {
       throw new Exception("Jumlah produk tidak mencukupi!");
 
     // update list produk
-    product.setAmount(product.getAmount() - amount);
-    this.arrayListProduct.remove(productIndex);
-    this.arrayListProduct.add(productIndex, product);
+    this.arrayListProduct.get(productIndex).setAmount(product.getAmount() - amount);
+
+    // product.setAmount(product.getAmount() - amount);
+    // this.arrayListProduct.remove(productIndex);
+    // this.arrayListProduct.add(productIndex, product);
+
 
     int totalPrice = product.getPrice() * amount;
     double totalPPN = totalPrice * ((double) PPN / 100);
@@ -86,15 +89,17 @@ public class SuperMarket {
       throw new Exception("Jumlah produk harus > 0");
 
     // cek ketersediaan nama produk
-    int productIndex = arrayListProduct.indexOf(new Product(name));
+    int productIndex = getProductIndexByName(name);
     if (productIndex == -1)
       throw new Exception("Produk dengan nama " + name + " tidak ditemukan!");
 
     // update list produk
     Product product = arrayListProduct.get(productIndex);
-    product.setAmount(product.getAmount() + amount);
-    arrayListProduct.remove(productIndex);
-    arrayListProduct.add(productIndex, product);
+    this.arrayListProduct.get(productIndex).setAmount(product.getAmount() + amount);
+
+    // product.setAmount(product.getAmount() + amount);
+    // arrayListProduct.remove(productIndex);
+    // arrayListProduct.add(productIndex, product);
   }
 
   public void createProduct(
@@ -131,7 +136,7 @@ public class SuperMarket {
         new Product("POCO F2", 1500000, 5),
         new Product("POCO F3", 2000000, 9),
     };
-    Collections.addAll(arrayListProduct, products);
+    Collections.addAll(this.arrayListProduct, products);
   }
 
   public int getTotalBalance() {
