@@ -46,12 +46,14 @@ public class PPBO_02_L0122142 {
     System.out.printf("Total transaksi  : %d\n", SuperMarket.totalTransaction);
     System.out.printf("Total pendapatan : Rp %s\n\n", Utils.currencyFormat(superMarket.getTotalBalance()));
 
-    int availableProductCount = superMarket.getProducts()
-        .stream().map(Product::getAmount)
-        .reduce(0, Integer::sum);
-    int soldProductCount = superMarket.getTransactionHistories()
-        .stream().map(Transaction::getAmount)
-        .reduce(0, Integer::sum);
+    int availableProductCount = 0;
+    for (Product product : superMarket.getProducts())
+      availableProductCount += product.getAmount();
+
+    int soldProductCount = 0;
+    for (Transaction transaction : superMarket.getTransactionHistories())
+      soldProductCount += transaction.getAmount();
+
     int totalProductCount = availableProductCount + soldProductCount;
 
     System.out.printf("Jumlah produk            : %d\n", totalProductCount);
