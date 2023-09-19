@@ -37,6 +37,8 @@ public class Product {
     return price;
   }
 
+  // override function equals agar bisa menggunakan fungsi indexOf
+  // pada ArrayList<Product>
   @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof Product)) return false;

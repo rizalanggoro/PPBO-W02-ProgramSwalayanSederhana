@@ -170,6 +170,7 @@ public class PPBO_02_L0122142 {
       System.out.printf("Rp %s\n", Utils.currencyFormat(totalPrice));
       Utils.printLine("=", 65);
 
+      // 4. variable local: untuk menghitung jumlah kembalian yang harus diberikan
       int userChangeMoney = 0;
       int userMoney = 0;
       boolean isTransactionCompleted = false;
@@ -263,7 +264,7 @@ public class PPBO_02_L0122142 {
   private static void printProducts(SuperMarket superMarket) {
     final List<Product> products = superMarket.getProducts();
 
-    System.out.println("\nAnggoro Market\n");
+    System.out.println("\nSmartphone Store\n");
     Utils.printLine("=", 60);
     System.out.printf(
         "%-3s | %-24s | %-8s | %-16s\n",

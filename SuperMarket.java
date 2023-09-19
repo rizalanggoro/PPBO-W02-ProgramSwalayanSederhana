@@ -20,16 +20,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class SuperMarket {
+  // 6. konstanta: konstanta untuk mendefinisikan pajak pertambahan nilai sebesar 11% yang digunakan di setiap pembelian
   public static final int PPN = 11;
+
+  // 2. variable static: untuk melacak jumlah total transaksi penjualan yang telah dilakukan di toko ini
   public static int totalTransaction = 0;
+
+  // 1. array barang: array yang berisi daftar barang-barang yang ada di toko
   private final ArrayList<Product> arrayListProduct = new ArrayList<>();
   private final ArrayList<Transaction> arrayListTransactionHistory = new ArrayList<>();
+
+  // 3. variable non-static: untuk melacak jumlah uang kas (int) di toko
   private int totalBalance = 0;
 
   private int getProductIndexByName(String name) {
     return this.arrayListProduct.indexOf(new Product(name));
   }
 
+  // 5. method & parameters: method untuk menjual barang dengan menerima parameters: nama dan jumlah
   public Transaction sellProduct(
       String name,
       int amount
@@ -55,11 +63,7 @@ public class SuperMarket {
     // update list produk
     this.arrayListProduct.get(productIndex).setAmount(product.getAmount() - amount);
 
-    // product.setAmount(product.getAmount() - amount);
-    // this.arrayListProduct.remove(productIndex);
-    // this.arrayListProduct.add(productIndex, product);
-
-
+    // 4. variable local: variabel lokal untuk menghitung jumlah total belanjaan mereka
     int totalPrice = product.getPrice() * amount;
     double totalPPN = totalPrice * ((double) PPN / 100);
     final Transaction transaction = new Transaction(
@@ -76,6 +80,7 @@ public class SuperMarket {
     return transaction;
   }
 
+  // 5. method & parameters: method untuk restok barang dengan menerima parameters: nama dan jumlah
   public void restockProduct(
       String name,
       int amount
@@ -94,12 +99,8 @@ public class SuperMarket {
       throw new Exception("Produk dengan nama " + name + " tidak ditemukan!");
 
     // update list produk
-    Product product = arrayListProduct.get(productIndex);
+    Product product = this.arrayListProduct.get(productIndex);
     this.arrayListProduct.get(productIndex).setAmount(product.getAmount() + amount);
-
-    // product.setAmount(product.getAmount() + amount);
-    // arrayListProduct.remove(productIndex);
-    // arrayListProduct.add(productIndex, product);
   }
 
   public void createProduct(
@@ -131,6 +132,7 @@ public class SuperMarket {
   }
 
   public void initializeProducts() {
+    // menambahkan initial produk ke dalam array list produk
     Product[] products = {
         new Product("POCO F1", 1000000, 10),
         new Product("POCO F2", 1500000, 5),
@@ -140,7 +142,7 @@ public class SuperMarket {
   }
 
   public int getTotalBalance() {
-    return totalBalance;
+    return this.totalBalance;
   }
 
   public ArrayList<Transaction> getTransactionHistories() {
